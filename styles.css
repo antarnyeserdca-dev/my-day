@@ -112,8 +112,15 @@ h2 {
 }
 
 .icon-button {
+  display: grid;
+  flex: 0 0 52px;
+  place-items: center;
   width: 52px;
   height: 52px;
+  aspect-ratio: 1;
+  padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
   font-size: 34px;
   font-weight: 300;
   line-height: 1;
