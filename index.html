@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f1e8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Мой день" />
+    <meta name="description" content="Простые напоминания о лекарствах и встречах" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/icon-180.png" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Мой день</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="today-label"></p>
+          <h1 id="page-title">Мой день</h1>
+        </div>
+        <button class="icon-button" id="quick-add" aria-label="Добавить" title="Добавить">+</button>
+      </header>
+
+      <main id="app" tabindex="-1"></main>
+
+      <nav class="bottom-nav" aria-label="Основная навигация">
+        <button class="nav-item active" data-route="today">
+          <span class="nav-icon" aria-hidden="true">⌂</span>
+          <span>Сегодня</span>
+        </button>
+        <button class="nav-item" data-route="medicines">
+          <span class="nav-icon" aria-hidden="true">✚</span>
+          <span>Лекарства</span>
+        </button>
+        <button class="nav-item" data-route="meetings">
+          <span class="nav-icon" aria-hidden="true">□</span>
+          <span>Встречи</span>
+        </button>
+        <button class="nav-item" data-route="more">
+          <span class="nav-icon" aria-hidden="true">•••</span>
+          <span>Ещё</span>
+        </button>
+      </nav>
+    </div>
+
+    <dialog id="choice-dialog" class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h2>Что добавить?</h2>
+        <button class="close-button" data-close aria-label="Закрыть">×</button>
+      </div>
+      <div class="choice-grid">
+        <button class="choice-card" data-open-form="medicine">
+          <span class="choice-icon medicine-bg">✚</span>
+          <span><strong>Лекарство</strong><small>Название, время и дни</small></span>
+        </button>
+        <button class="choice-card" data-open-form="meeting">
+          <span class="choice-icon meeting-bg">□</span>
+          <span><strong>Встречу</strong><small>Дата, место и напоминание</small></span>
+        </button>
+      </div>
+    </dialog>
+
+    <dialog id="medicine-dialog" class="sheet form-sheet">
+      <form id="medicine-form">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+          <h2 id="medicine-form-title">Новое лекарство</h2>
+          <button type="button" class="close-button" data-close aria-label="Закрыть">×</button>
+        </div>
+        <input type="hidden" name="id" />
+        <label class="field">
+          <span>Название</span>
+          <input name="name" required maxlength="60" placeholder="Например, Витамин D" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span>Дозировка</span>
+          <input name="dose" maxlength="60" placeholder="Например, 1 таблетка" autocomplete="off" />
+        </label>
+
+        <fieldset class="field-group">
+          <legend>Время приёма</legend>
+          <div id="medicine-times" class="time-list"></div>
+          <button type="button" class="text-button" id="add-time">+ Добавить время</button>
+        </fieldset>
+
+        <fieldset class="field-group">
+          <legend>Дни недели</legend>
+          <div class="weekday-grid" id="weekday-grid">
+            <label><input type="checkbox" name="days" value="1" checked /><span>Пн</span></label>
+            <label><input type="checkbox" name="days" value="2" checked /><span>Вт</span></label>
+            <label><input type="checkbox" name="days" value="3" checked /><span>Ср</span></label>
+            <label><input type="checkbox" name="days" value="4" checked /><span>Чт</span></label>
+            <label><input type="checkbox" name="days" value="5" checked /><span>Пт</span></label>
+            <label><input type="checkbox" name="days" value="6" checked /><span>Сб</span></label>
+            <label><input type="checkbox" name="days" value="0" checked /><span>Вс</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field-row">
+          <label class="field">
+            <span>Начало</span>
+            <input type="date" name="startDate" required />
+          </label>
+          <label class="field">
+            <span>Окончание</span>
+            <input type="date" name="endDate" />
+          </label>
+        </div>
+
+        <button class="primary-button" type="submit">Сохранить лекарство</button>
+        <button class="danger-button hidden" type="button" id="delete-medicine">Удалить лекарство</button>
+      </form>
+    </dialog>
+
+    <dialog id="meeting-dialog" class="sheet form-sheet">
+      <form id="meeting-form">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+          <h2 id="meeting-form-title">Новая встреча</h2>
+          <button type="button" class="close-button" data-close aria-label="Закрыть">×</button>
+        </div>
+        <input type="hidden" name="id" />
+        <label class="field">
+          <span>Название</span>
+          <input name="title" required maxlength="80" placeholder="Например, приём у врача" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span>Дата и время</span>
+          <input type="datetime-local" name="dateTime" required />
+        </label>
+        <label class="field">
+          <span>Место</span>
+          <input name="place" maxlength="100" placeholder="Адрес или кабинет" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span>Заметка</span>
+          <textarea name="notes" maxlength="300" rows="3" placeholder="Что взять с собой"></textarea>
+        </label>
+        <label class="field">
+          <span>Напомнить заранее</span>
+          <select name="reminderMinutes">
+            <option value="10">За 10 минут</option>
+            <option value="30" selected>За 30 минут</option>
+            <option value="60">За 1 час</option>
+            <option value="1440">За 1 день</option>
+          </select>
+        </label>
+        <button class="primary-button" type="submit">Сохранить встречу</button>
+        <button class="danger-button hidden" type="button" id="delete-meeting">Удалить встречу</button>
+      </form>
+    </dialog>
+
+    <dialog id="confirm-dialog" class="confirm-dialog">
+      <h2 id="confirm-title">Удалить?</h2>
+      <p id="confirm-text"></p>
+      <div class="confirm-actions">
+        <button class="secondary-button" data-confirm="no">Отмена</button>
+        <button class="danger-solid-button" data-confirm="yes">Удалить</button>
+      </div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
