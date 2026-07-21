@@ -56,6 +56,13 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
+@media (hover: none), (pointer: coarse) {
+  button:focus,
+  button:focus-visible {
+    outline: none;
+  }
+}
+
 .app-shell {
   width: min(100%, 720px);
   min-height: 100vh;
