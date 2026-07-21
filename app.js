@@ -711,7 +711,6 @@ document.querySelectorAll(".nav-item").forEach((button) => {
   button.addEventListener("click", () => {
     state.route = button.dataset.route;
     render();
-    app.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });

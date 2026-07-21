@@ -48,7 +48,6 @@ button {
   color: inherit;
 }
 
-button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
@@ -56,10 +55,17 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-@media (hover: none), (pointer: coarse) {
-  button:focus,
+button:focus,
+button:focus-visible,
+#app:focus,
+#app:focus-visible {
+  outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
   button:focus-visible {
-    outline: none;
+    outline: 3px solid rgba(47, 102, 129, 0.28);
+    outline-offset: 2px;
   }
 }
 
@@ -123,9 +129,15 @@ h2 {
   flex: 0 0 52px;
   place-items: center;
   width: 52px;
+  min-width: 52px;
+  max-width: 52px;
   height: 52px;
+  min-height: 52px;
+  max-height: 52px;
   aspect-ratio: 1;
   padding: 0;
+  border-radius: 999px;
+  overflow: hidden;
   -webkit-appearance: none;
   appearance: none;
   font-size: 34px;
@@ -139,9 +151,15 @@ h2 {
   flex: 0 0 40px;
   place-items: center;
   width: 40px;
+  min-width: 40px;
+  max-width: 40px;
   height: 40px;
+  min-height: 40px;
+  max-height: 40px;
   aspect-ratio: 1;
   padding: 0;
+  border-radius: 999px;
+  overflow: hidden;
   background: #ece9e1;
   color: var(--ink);
   -webkit-appearance: none;
@@ -904,11 +922,15 @@ dialog::backdrop {
   align-self: center;
   justify-self: center;
   width: 44px;
+  min-width: 44px;
+  max-width: 44px;
   height: 44px;
+  min-height: 44px;
+  max-height: 44px;
   aspect-ratio: 1;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: 999px;
   background: #f2e6e2;
   color: var(--red);
   cursor: pointer;
