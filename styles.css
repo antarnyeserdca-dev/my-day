@@ -128,10 +128,17 @@ h2 {
 }
 
 .close-button {
+  display: grid;
+  flex: 0 0 40px;
+  place-items: center;
   width: 40px;
   height: 40px;
+  aspect-ratio: 1;
+  padding: 0;
   background: #ece9e1;
   color: var(--ink);
+  -webkit-appearance: none;
+  appearance: none;
   font-size: 26px;
   line-height: 1;
 }
@@ -885,12 +892,23 @@ dialog::backdrop {
 }
 
 .remove-time {
+  display: grid;
+  place-items: center;
+  align-self: center;
+  justify-self: center;
+  width: 44px;
+  height: 44px;
+  aspect-ratio: 1;
+  padding: 0;
   border: 0;
-  border-radius: 13px;
+  border-radius: 50%;
   background: #f2e6e2;
   color: var(--red);
   cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
   font-size: 24px;
+  line-height: 1;
 }
 
 .text-button {
